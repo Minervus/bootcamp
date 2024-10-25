@@ -17,11 +17,29 @@ app.listen(port, () => {
 app.use(express.static("public"));
 
 // 4. When the user goes to the home page it should render the index.ejs file.
-app.get("/", (req,res) => {
-    res.render("index.ejs");
+app.get("/", async (req,res) => {
+    try {
+        const response = await axios.get(API_URL + "/random");
+        //const result = JSON.stringify(response.data); 
+        // console.log(result);
+        // console.log(result.secret);
+        // console.log(result.username);
+        console.log(response.secret);
+        console.log(response.username);
+        //console.log(response);
+        // console.log(typeof result);
+        res.render("index.ejs", {
+            secret: response.data.secret,
+            user: response.data.username
+        });
+    } catch (error) {
+        res.render("index.ejs", { secret: "I dunno dawg" });
+    }
 })
 
 // 5. Use axios to get a random secret and pass it to index.ejs to display the
 // secret and the username of the secret.
+
+
 
 // 6. Listen on your predefined port and start the server.
