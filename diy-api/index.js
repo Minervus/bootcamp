@@ -78,7 +78,7 @@ app.delete('/jokes/:id', (req,res) => {
   try {
     const deleteMe = jokes.findIndex((item) => item.id == req.params.id); 
     const x = jokes.splice(deleteMe,1); 
-    res.send("OL");
+    res.send("Ok");
   } catch (error) {
     res.send("No bueno");
   }
@@ -87,6 +87,20 @@ app.delete('/jokes/:id', (req,res) => {
 
 
 //8. DELETE All jokes
+app.delete('/all', (req,res) => {
+  if(req.headers.apikey === masterKey) {
+    const jokes = [];
+    res.send("OK All Jokes Deleted")
+  } else {
+    console.log(req.headers)
+    console.log(req.header)
+    console.log(req.headers.apikey)
+    console.log(req.apikey)
+    res.send("Invalid API Key"); 
+  }
+})
+
+
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
